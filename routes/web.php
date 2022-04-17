@@ -15,6 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//prefixメソッドはグループ内の各ルートに対して、指定されたURIのプレフィックスを指定するために使用。今回の場合は、グループ内の全ルートのURIの頭にtaskがつく。
+//認証の場合だけ表示するために'middleware' => 'auth'と書く。
+Route::group(['prefix' => 'task', 'middleware' => 'auth'], function () {
+    Route::get('index', 'TaskController@index')->name('task.index');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
