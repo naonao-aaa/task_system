@@ -14,6 +14,12 @@
                         </div>
                     @endif
 
+                    <form method="GET" action="{{ route('task.create') }}">
+                      <button type="submit" class="btn btn-primary">
+                      新規登録
+                      </button>
+                    </form>
+
                     indexです
                 </div>
             </div>

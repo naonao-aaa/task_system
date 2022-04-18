@@ -19,6 +19,8 @@ Route::get('/', function () {
 //認証の場合だけ表示するために'middleware' => 'auth'と書く。
 Route::group(['prefix' => 'task', 'middleware' => 'auth'], function () {
     Route::get('index', 'TaskController@index')->name('task.index');
+    Route::get('create', 'TaskController@create')->name('task.create');
+    Route::post('store', 'TaskController@store')->name('task.store');
 });
 
 Auth::routes();

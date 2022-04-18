@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Task;
 
 class TaskController extends Controller
 {
@@ -23,7 +24,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('task.create');
     }
 
     /**
@@ -34,7 +35,18 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = Task::create([
+            'name' => $request->input('task_name'),
+            'description' => $request->input('description'),
+            'user_id' => $request->input('user'),
+            'category_id' => $request->input('category'),
+            'status_id' => $request->input('status'),
+            'progress' => $request->input('progress'),
+            'man-hours' => $request->input('man-hours'),
+            'deadline' => $request->input('deadline')
+        ]);
+
+        return redirect(route('task.index'));
     }
 
     /**
