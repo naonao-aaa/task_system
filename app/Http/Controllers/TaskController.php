@@ -42,7 +42,6 @@ class TaskController extends Controller
             'category_id' => $request->input('category'),
             'status_id' => $request->input('status'),
             'progress' => $request->input('progress'),
-            'man-hours' => $request->input('man-hours'),
             'deadline' => $request->input('deadline')
         ]);
 

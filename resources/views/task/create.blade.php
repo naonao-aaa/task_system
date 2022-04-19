@@ -48,8 +48,6 @@
                         {{-- 進捗度 --}}
                         <input type="hidden" name="progress" value="0">
                         <br>
-                        {{-- 工数 --}}
-                        <input type="hidden" name="man-hours" value="0">
 
                         締切日<br>
                         <input type="date" name="deadline">
