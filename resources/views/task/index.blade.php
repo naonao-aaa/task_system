@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
@@ -20,7 +20,34 @@
                       </button>
                     </form>
 
-                    indexです
+                    <table class="table table-hover">
+                      <thead>
+                          <tr>
+                          <th scope="col">id</th>
+                          <th scope="col">ステータス</th>
+                          <th scope="col">タスク名</th>
+                          <th scope="col">作成者</th>
+                          <th scope="col">カテゴリ</th>
+                          <th scope="col">締切日</th>
+                          <th scope="col">更新日</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($tasks as $task)
+                          <tr>
+                          <a href="#">
+                          <th>{{$task->id}}</th>
+                          </a>
+                          <td>{{$task->status->name}}</td>
+                          <td>{{$task->name}}</td>
+                          <td>{{$task->user->name}}</td>
+                          <td>{{$task->category->name}}</td>
+                          <td>{{$task->deadline}}</td>
+                          <td>{{$task->updated_at}}</td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
                 </div>
             </div>
         </div>
