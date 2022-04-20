@@ -35,12 +35,10 @@
                       <tbody>
                         @foreach($tasks as $task)
                           <tr>
-                          <a href="#">
-                          <th>{{$task->id}}</th>
-                          </a>
+                          <th><a href="{{ route('task.show', $task->id) }}">{{$task->id}}</a></th>
                           <td>{{$task->status->name}}</td>
                           <td>{{$task->name}}</td>
-                          <td>{{$task->user->name}}</td>
+                          <td><a href="{{ route('task.show', $task->id) }}">{{$task->name}}</a></td>
                           <td>{{$task->category->name}}</td>
                           <td>{{$task->deadline}}</td>
                           <td>{{$task->updated_at}}</td>

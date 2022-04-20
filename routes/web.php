@@ -21,6 +21,7 @@ Route::group(['prefix' => 'task', 'middleware' => 'auth'], function () {
     Route::get('index', 'TaskController@index')->name('task.index');
     Route::get('create', 'TaskController@create')->name('task.create');
     Route::post('store', 'TaskController@store')->name('task.store');
+    Route::get('show/{task}', 'TaskController@show')->name('task.show');   //依存性の注入
 });
 
 Auth::routes();
