@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::get();
+        $tasks = Task::with(['status', 'category', 'user'])->get();   //Eagerローディング
 
         return view('task.index', compact('tasks'));
     }
