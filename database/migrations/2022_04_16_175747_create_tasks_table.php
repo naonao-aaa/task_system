@@ -23,7 +23,7 @@ class CreateTasksTable extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('status_id')->nullable();
             $table->integer('progress')->nullable()->comment('進捗度');
-            $table->integer('man-hours')->nullable()->comment('工数');
+            $table->integer('man_hours')->nullable()->comment('工数');
             $table->date('deadline')->nullable()->comment('締め切り日');
             $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'))->comment('更新日時');
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('登録日時');
