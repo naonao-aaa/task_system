@@ -51,10 +51,17 @@
                         <p class="card-text">{{$task->description}}</p>
                     </div>
                     <div class="card-footer text-muted">
+                    @if(Auth::user()->id === $task->user_id)
                         <form method="GET" action="{{route('task.edit', $task)}}">
                             @csrf
                             <input class="btn btn-success" type="submit" value="編集する">
                         </form>
+                        <br>
+                        <form method="POST" action="{{ route('task.destroy', $task)}}" id="delete_{{ $task->id }}">
+                            @csrf
+                            <a href="#" class="btn btn-danger" data-id="{{$task->id}}" onclick="deletePost(this);">削除する</a>
+                        </form>
+                    @endif    
                     </div>
                     </div>
                 </div>
@@ -62,4 +69,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    <!--
+    /*************************************
+    削除ボタンを押してすぐにレコードが削除
+    されるのも問題なので、一旦javascriptで
+    確認メッセージを流します。
+    *************************************/
+    //-->
+    function deletePost(e){
+        'use strict';
+        if(confirm('本当に削除していいですか？')){
+            document.getElementById('delete_'+ e.dataset.id).submit();
+        }
+    }
+</script>
+
 @endsection

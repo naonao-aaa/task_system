@@ -29,7 +29,7 @@
                           <th scope="col">作成者</th>
                           <th scope="col">カテゴリ</th>
                           <th scope="col">締切日</th>
-                          <th scope="col">更新日</th>
+                          <th scope="col">更新日時</th>
                           </tr>
                       </thead>
                       <tbody>
