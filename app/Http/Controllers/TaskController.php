@@ -68,9 +68,10 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Task $task)
     {
-        //
+        return view('task.edit')
+            ->with('task', $task);
     }
 
     /**
@@ -80,9 +81,19 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
-        //
+        $task->name = $request->input('task_name');
+        $task->description = $request->input('description');
+        $task->category_id = $request->input('category');
+        $task->status_id = $request->input('status');
+        $task->progress = $request->input('progress');
+        $task->man_hours = $request->input('man_hours');
+        $task->deadline = $request->input('deadline');
+
+        $task->save();
+
+        return redirect('task/index');
     }
 
     /**

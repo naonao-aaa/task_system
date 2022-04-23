@@ -15,11 +15,12 @@
                     @endif
 
                     <form method="GET" action="{{ route('task.index') }}">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-dark">
                         一覧画面
                         </button>
                     </form>
 
+                    <br>
                     <div class="card">
                     <div class="card-header">
                         <h4>{{$task->name}}</h4>
@@ -50,7 +51,10 @@
                         <p class="card-text">{{$task->description}}</p>
                     </div>
                     <div class="card-footer text-muted">
-                        2 days ago
+                        <form method="GET" action="{{route('task.edit', $task)}}">
+                            @csrf
+                            <input class="btn btn-success" type="submit" value="編集する">
+                        </form>
                     </div>
                     </div>
                 </div>
