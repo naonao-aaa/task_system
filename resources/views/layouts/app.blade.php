@@ -49,6 +49,19 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                <form method="GET" action="{{ route('task.index') }}">
+                                    <select onchange="submit(this.form)" name="category" class="nav-link">
+                                        <option value="">カテゴリ選択</option>
+                                        <option value="1">ECサイト</option>
+                                        <option value="2">オンラインサロン</option>
+                                        <option value="3">SNSサイト</option>
+                                        <option value="4">予約システム</option>
+                                        <option value="5">社内管理システム</option>
+                                    </select>
+                                </form>
+                            </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

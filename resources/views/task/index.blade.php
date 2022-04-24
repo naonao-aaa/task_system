@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">{{$category}}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -27,7 +27,6 @@
                           <th scope="col">ステータス</th>
                           <th scope="col">タスク名</th>
                           <th scope="col">作成者</th>
-                          <th scope="col">カテゴリ</th>
                           <th scope="col">締切日</th>
                           <th scope="col">更新日時</th>
                           </tr>
@@ -39,7 +38,6 @@
                           <td>{{$task->status->name}}</td>
                           <td>{{$task->name}}</td>
                           <td><a href="{{ route('task.show', $task->id) }}">{{$task->name}}</a></td>
-                          <td>{{$task->category->name}}</td>
                           <td>{{$task->deadline}}</td>
                           <td>{{$task->updated_at}}</td>
                           </tr>

@@ -58,11 +58,9 @@
                         </div>
                     </form>
                     <br>
-                    <form method="GET" action="{{ route('task.index') }}">
-                        <button type="submit" class="btn btn-dark">
-                        戻る
-                        </button>
-                    </form>
+                    <div>
+                        <button type="button" class="btn btn-dark" onClick="history.back()">戻る</button>
+                    </div>
                 </div>
             </div>
         </div>

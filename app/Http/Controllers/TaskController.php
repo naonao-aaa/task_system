@@ -13,11 +13,33 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::with(['status', 'category', 'user'])->get();   //Eagerローディング
+        $categoryId = $request->input('category');
 
-        return view('task.index', compact('tasks'));
+        if (isset($categoryId)) {
+            $tasks = Task::with(['status', 'category', 'user'])->where('category_id', $categoryId)->get();   //カテゴリで条件指定//Eagerローディング
+
+            if ($tasks->count() === 0) {
+                $category = '登録がありません';
+            } else {
+                $i = 0;
+                foreach ($tasks as $task) {
+                    if ($i >= 1) {
+                        break;
+                    }
+                    $category = $task->category->name;
+                    $i++;
+                }
+            }
+        } else {
+            $tasks = Task::with(['status', 'category', 'user'])->get();   //Eagerローディング
+
+            $category = 'すべてのカテゴリ';
+        }
+
+
+        return view('task.index', compact('tasks', 'category'));
     }
 
     /**

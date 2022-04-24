@@ -14,11 +14,9 @@
                         </div>
                     @endif
 
-                    <form method="GET" action="{{ route('task.index') }}">
-                        <button type="submit" class="btn btn-dark">
-                        一覧画面
-                        </button>
-                    </form>
+                    <div>
+                        <button type="button" class="btn btn-dark" onClick="history.back()">戻る</button>
+                    </div>
 
                     <br>
                     <div class="card">
@@ -56,7 +54,7 @@
                             @csrf
                             <input class="btn btn-primary float-left mr-3" type="submit" value="編集する">
                         </form>
-                        
+
                         <form method="POST" action="{{ route('task.destroy', $task)}}" id="delete_{{ $task->id }}">
                             @csrf
                             <a href="#" class="btn btn-danger" data-id="{{$task->id}}" onclick="deletePost(this);">削除する</a>
