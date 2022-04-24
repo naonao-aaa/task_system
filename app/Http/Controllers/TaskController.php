@@ -18,7 +18,7 @@ class TaskController extends Controller
         $categoryId = $request->input('category');
 
         if (isset($categoryId)) {
-            $tasks = Task::with(['status', 'category', 'user'])->where('category_id', $categoryId)->get();   //カテゴリで条件指定//Eagerローディング
+            $tasks = Task::with(['status', 'category', 'user'])->where('category_id', $categoryId)->paginate(10);   //カテゴリで条件指定//Eagerローディング
 
             if ($tasks->count() === 0) {
                 $category = '登録がありません';
@@ -33,13 +33,13 @@ class TaskController extends Controller
                 }
             }
         } else {
-            $tasks = Task::with(['status', 'category', 'user'])->get();   //Eagerローディング
+            $tasks = Task::with(['status', 'category', 'user'])->paginate(10);   //Eagerローディング
 
             $category = 'すべてのカテゴリ';
         }
 
 
-        return view('task.index', compact('tasks', 'category'));
+        return view('task.index', compact('tasks', 'category', 'categoryId'));
     }
 
     /**

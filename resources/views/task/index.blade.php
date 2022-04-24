@@ -44,6 +44,7 @@
                         @endforeach
                       </tbody>
                     </table>
+                    {{$tasks->appends(['category' => $categoryId])->links()}}
                 </div>
             </div>
         </div>
