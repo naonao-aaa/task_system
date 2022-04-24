@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use App\Comment;
 
 class TaskController extends Controller
 {
@@ -58,8 +59,10 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        $comments = Comment::with(['task', 'user'])->where('task_id', $task->id)->get();
+
         return view('task.show')
-            ->with('task', $task);
+            ->with(['task' => $task, 'comments' => $comments]);
     }
 
     /**

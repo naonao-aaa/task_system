@@ -27,6 +27,12 @@ Route::group(['prefix' => 'task', 'middleware' => 'auth'], function () {
     Route::post('destroy/{task}', 'TaskController@destroy')->name('task.destroy'); //依存性の注入
 });
 
+//prefixメソッドはグループ内の各ルートに対して、指定されたURIのプレフィックスを指定するために使用。今回の場合は、グループ内の全ルートのURIの頭にcommentがつく。
+//認証の場合だけ表示するために'middleware' => 'auth'と書く。
+Route::group(['prefix' => 'comment', 'middleware' => 'auth'], function () {
+    Route::post('store/{task}', 'CommentController@store')->name('comment.store');
+});
+
 Auth::routes();
 
 Route::get('/home', 'TaskController@index')->name('home');

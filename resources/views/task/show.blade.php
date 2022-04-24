@@ -54,7 +54,7 @@
                     @if(Auth::user()->id === $task->user_id)
                         <form method="GET" action="{{route('task.edit', $task)}}">
                             @csrf
-                            <input class="btn btn-success" type="submit" value="編集する">
+                            <input class="btn btn-primary" type="submit" value="編集する">
                         </form>
                         <br>
                         <form method="POST" action="{{ route('task.destroy', $task)}}" id="delete_{{ $task->id }}">
@@ -64,6 +64,29 @@
                     @endif    
                     </div>
                     </div>
+
+                    <br>
+                    @foreach($comments as $comment)
+                        <div class="card">
+                            <div class="card-header text-muted">
+                                <h7>投稿者：{{$comment->user->name}}</h7>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{$comment->text}}</p>
+                            </div>
+                        </div>
+                    @endforeach
+
+                    <br>
+                    <form method="POST" action="{{ route('comment.store', $task) }}">
+                        @csrf
+                        <textarea class="form-control" rows="5" name="comment"></textarea>
+                        <input type="hidden" name="user" value="{{ Auth::user()->id }}">
+                        <input type="hidden" name="task" value="{{ $task->id }}">
+
+                        <input class="btn btn-success" type="submit" value="コメント投稿する">
+                    </form>
+                    
                 </div>
             </div>
         </div>
