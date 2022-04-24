@@ -54,9 +54,9 @@
                     @if(Auth::user()->id === $task->user_id)
                         <form method="GET" action="{{route('task.edit', $task)}}">
                             @csrf
-                            <input class="btn btn-primary" type="submit" value="編集する">
+                            <input class="btn btn-primary float-left mr-3" type="submit" value="編集する">
                         </form>
-                        <br>
+                        
                         <form method="POST" action="{{ route('task.destroy', $task)}}" id="delete_{{ $task->id }}">
                             @csrf
                             <a href="#" class="btn btn-danger" data-id="{{$task->id}}" onclick="deletePost(this);">削除する</a>
@@ -86,7 +86,7 @@
 
                         <input class="btn btn-success" type="submit" value="コメント投稿する">
                     </form>
-                    
+
                 </div>
             </div>
         </div>
