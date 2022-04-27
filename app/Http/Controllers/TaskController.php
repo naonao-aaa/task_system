@@ -107,7 +107,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(StoreTaskForm $request, Task $task)
     {
         $task->name = $request->input('task_name');
         $task->description = $request->input('description');
