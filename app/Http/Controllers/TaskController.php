@@ -18,8 +18,27 @@ class TaskController extends Controller
     {
         $categoryId = $request->input('category');
 
+        $search = $request->input('search');
+
+        $query = Task::with(['status', 'category', 'user']);  //Eagerローディング
+
         if (isset($categoryId)) {
-            $tasks = Task::with(['status', 'category', 'user'])->where('category_id', $categoryId)->paginate(10);   //カテゴリで条件指定//Eagerローディング
+            $query->where('category_id', $categoryId);   //カテゴリで条件指定
+
+            //もしキーワードがあったら
+            if ($search !== null) {
+                //全角スペースを半角に
+                $search_split = mb_convert_kana($search, 's');
+                //空白で区切る
+                $search_split2 = preg_split('/[\s]+/', $search_split, -1, PREG_SPLIT_NO_EMPTY);
+                //単語をループで回す
+                foreach ($search_split2 as $value) {
+                    $query->where('name', 'like', '%' . $value . '%');
+                }
+            };
+
+            $query->orderBy('created_at', 'asc');
+            $tasks = $query->paginate(10);
 
             if ($tasks->count() === 0) {
                 $category = '登録がありません';
@@ -34,9 +53,23 @@ class TaskController extends Controller
                 }
             }
         } else {
-            $tasks = Task::with(['status', 'category', 'user'])->paginate(10);   //Eagerローディング
+
+            //もしキーワードがあったら
+            if ($search !== null) {
+                //全角スペースを半角に
+                $search_split = mb_convert_kana($search, 's');
+                //空白で区切る
+                $search_split2 = preg_split('/[\s]+/', $search_split, -1, PREG_SPLIT_NO_EMPTY);
+                //単語をループで回す
+                foreach ($search_split2 as $value) {
+                    $query->where('name', 'like', '%' . $value . '%');
+                }
+            };
 
             $category = 'すべてのカテゴリ';
+
+            $query->orderBy('created_at', 'asc');
+            $tasks = $query->paginate(10);
         }
 
 
