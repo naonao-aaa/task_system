@@ -49,16 +49,19 @@
                                 </li>
                             @endif
                         @else
+
+                            @if(isset($categoryId))  {{--以下のプルダウンで、$categoryIdという変数を用いているので、エラーが出ないように$categoryIdが存在していない時とNULLの時はこのプルダウン自体を表示させないようにした。--}}
                                 <form method="GET" action="{{ route('task.index') }}">
                                     <select onchange="submit(this.form)" name="category" class="nav-link">
-                                        <option value="">カテゴリ選択</option>
-                                        <option value="1">ECサイト</option>
-                                        <option value="2">オンラインサロン</option>
-                                        <option value="3">SNSサイト</option>
-                                        <option value="4">予約システム</option>
-                                        <option value="5">社内管理システム</option>
+                                        <option value="" {{ $categoryId == '' ? 'selected' : '' }}>カテゴリ選択</option>
+                                        <option value="1" {{ $categoryId == 1 ? 'selected' : '' }}>ECサイト</option>
+                                        <option value="2" {{ $categoryId == 2 ? 'selected' : '' }}>オンラインサロン</option>
+                                        <option value="3" {{ $categoryId == 3 ? 'selected' : '' }}>SNSサイト</option>   {{--選択された項目が初期値になるようにselected属性を追加--}}
+                                        <option value="4" {{ $categoryId == 4 ? 'selected' : '' }}>予約システム</option>
+                                        <option value="5" {{ $categoryId == 5 ? 'selected' : '' }}>社内管理システム</option>
                                     </select>
                                 </form>
+                            @endif
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

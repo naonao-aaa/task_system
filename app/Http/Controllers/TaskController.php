@@ -17,12 +17,12 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $categoryId = $request->input('category');
+        $categoryId = $request->input('category') ?? '';  //$request->input('category')が、存在していない(定義されてない)か、NULLの時は、$categoryIdを''(空文字)にする。
         $search = $request->input('search');
 
         $query = Task::with(['status', 'category', 'user']);  //Eagerローディング
 
-        if (isset($categoryId)) {
+        if (!empty($categoryId)) {     //if(isset($categoryId))とすると、空文字の時もtrueになるので、if句の処理が通ってしまうので。（emptyとissetの違いを復習すべき）//空文字列とそうでない時で分岐している。
             $query->where('category_id', $categoryId);   //カテゴリで条件指定
 
             DetailProcess::search($search, $query);   //検索キーワードの処理
