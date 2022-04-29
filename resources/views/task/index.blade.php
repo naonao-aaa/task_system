@@ -22,6 +22,7 @@
 
                     <form method="GET" action="{{route('task.index')}}" class="form-inline my-2">
                       <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                      <input type="hidden" name="category" value="{{$categoryId}}">   {{--カテゴリ毎で検索できるように、categoryのパラメータも追加する。（method="GET"のform内のinputタグで設定したものは、全てパラメータに並ぶことになる）--}}
                       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
 
