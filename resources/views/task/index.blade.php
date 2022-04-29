@@ -43,8 +43,8 @@
                           <td>{{$task->status->name}}</td>
                           <td><a href="{{ route('task.show', $task->id) }}">{{$task->name}}</a></td>
                           <td>{{$task->user->name}}</td>
-                          <td>{{$task->deadline}}</td>
-                          <td>{{$task->updated_at}}</td>
+                          <td>{{ $task->deadline ? $task->deadline->format("Y/m/d") : '' }}</td>  {{-- $task->deadlineはnullable設定をしているので、NULLのレコードを考慮して三項演算子を用いる --}}
+                          <td>{{ $task->updated_at->diffForHumans() }}</td>  {{-- $task->updated_atは、nullable設定をしていないためNULLのレコードは無いため、NULLを考慮しないでOK --}}
                           </tr>
                         @endforeach
                       </tbody>
