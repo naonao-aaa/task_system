@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Task;
 use App\Comment;
 use App\Http\Requests\StoreTaskForm;
+use App\Services\DetailProcess;
 
 class TaskController extends Controller
 {
@@ -17,7 +18,6 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $categoryId = $request->input('category');
-
         $search = $request->input('search');
 
         $query = Task::with(['status', 'category', 'user']);  //Eagerローディング
@@ -25,53 +25,19 @@ class TaskController extends Controller
         if (isset($categoryId)) {
             $query->where('category_id', $categoryId);   //カテゴリで条件指定
 
-            //もしキーワードがあったら
-            if ($search !== null) {
-                //全角スペースを半角に
-                $search_split = mb_convert_kana($search, 's');
-                //空白で区切る
-                $search_split2 = preg_split('/[\s]+/', $search_split, -1, PREG_SPLIT_NO_EMPTY);
-                //単語をループで回す
-                foreach ($search_split2 as $value) {
-                    $query->where('name', 'like', '%' . $value . '%');
-                }
-            };
+            DetailProcess::search($search, $query);   //検索キーワードの処理
 
-            $query->orderBy('created_at', 'asc');
-            $tasks = $query->paginate(10);
+            $tasks = DetailProcess::taskIndexLastQueryProcess($query);   //$queryに最後に付け加える処理
 
-            if ($tasks->count() === 0) {
-                $category = '登録がありません';
-            } else {
-                $i = 0;
-                foreach ($tasks as $task) {
-                    if ($i >= 1) {
-                        break;
-                    }
-                    $category = $task->category->name;
-                    $i++;
-                }
-            }
+            $category = DetailProcess::categoryName($tasks);   //カテゴリ名を取得
+
         } else {
-
-            //もしキーワードがあったら
-            if ($search !== null) {
-                //全角スペースを半角に
-                $search_split = mb_convert_kana($search, 's');
-                //空白で区切る
-                $search_split2 = preg_split('/[\s]+/', $search_split, -1, PREG_SPLIT_NO_EMPTY);
-                //単語をループで回す
-                foreach ($search_split2 as $value) {
-                    $query->where('name', 'like', '%' . $value . '%');
-                }
-            };
+            DetailProcess::search($search, $query);   //検索キーワードの処理
 
             $category = 'すべてのカテゴリ';
 
-            $query->orderBy('created_at', 'asc');
-            $tasks = $query->paginate(10);
+            $tasks = DetailProcess::taskIndexLastQueryProcess($query);   //$queryに最後に付け加える処理
         }
-
 
         return view('task.index', compact('tasks', 'category', 'categoryId'));
     }
