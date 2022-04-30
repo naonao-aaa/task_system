@@ -52,7 +52,7 @@ class TaskController extends Controller
         $task = Task::create([
             'name' => $request->input('task_name'),
             'description' => $request->input('description'),
-            'user_id' => $request->input('user'),
+            'admin_user' => $request->input('user'),
             'category_id' => $request->input('category'),
             'status_id' => $request->input('status'),
             'progress' => $request->input('progress'),

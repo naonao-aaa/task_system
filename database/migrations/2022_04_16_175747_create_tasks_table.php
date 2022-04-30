@@ -19,7 +19,8 @@ class CreateTasksTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->comment('タスク名');
             $table->text('description')->comment('タスク説明文');
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('admin_user')->nullable()->comment('タスク管理者');
+            $table->unsignedBigInteger('work_user')->nullable()->comment('タスク担当者');
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('status_id')->nullable();
             $table->integer('progress')->nullable()->comment('進捗度');
@@ -29,7 +30,13 @@ class CreateTasksTable extends Migration
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'))->comment('登録日時');
 
             //外部キー制約
-            $table->foreign('user_id')
+            $table->foreign('admin_user')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
+
+            $table->foreign('work_user')
                 ->references('id')
                 ->on('users')
                 ->onUpdate('cascade')
