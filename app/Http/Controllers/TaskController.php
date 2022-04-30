@@ -20,12 +20,15 @@ class TaskController extends Controller
         $categoryId = $request->input('category') ?? '';  //$request->input('category')が、存在していない(定義されてない)か、NULLの時は、$categoryIdを''(空文字)にする。
         $search = $request->input('search');
 
+        $pulldownCategories = DetailProcess::categoryAll();
+
         $index = DetailProcess::taskIndexQuery($categoryId, $search);   //クエリ処理などの大部分の処理を、サービスに切り離している。
 
         return view('task.index')
             ->with('tasks', $index['tasks'])
             ->with('category', $index['category'])
-            ->with('categoryId', $index['categoryId']);
+            ->with('categoryId', $index['categoryId'])
+            ->with('pulldownCategories', $pulldownCategories);
     }
 
     /**

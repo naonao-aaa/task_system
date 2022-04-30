@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Task;
+use App\Category;
 
 /**
  * 詳細処理クラス
@@ -101,5 +102,16 @@ class DetailProcess
 
     $index = array('tasks' => $tasks, 'category' => $category, 'categoryId' => $categoryId);
     return $index;
+  }
+
+  /**
+   * Categoriesテーブルの全てのカテゴリを取得
+   *
+   * @return Collection
+   */
+  public static function categoryAll(): Collection
+  {
+    $categoryAll = Category::all();
+    return $categoryAll;
   }
 }
