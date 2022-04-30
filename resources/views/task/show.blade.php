@@ -46,7 +46,7 @@
                         </tbody>
                     </table>
                     <div class="card-body">
-                        <p class="card-text">{{$task->description}}</p>
+                        <p class="card-text">{!! nl2br(e($task->description)) !!}</p>
                     </div>
                     <div class="card-footer text-muted">
                     @if(Auth::user()->id === $task->user_id)
@@ -70,7 +70,7 @@
                                 <h7>投稿者：{{$comment->user->name}}</h7>
                             </div>
                             <div class="card-body">
-                                <p class="card-text">{{$comment->text}}</p>
+                                <p class="card-text">{!! nl2br(e($comment->text)) !!}</p>
                             </div>
                         </div>
                     @endforeach
