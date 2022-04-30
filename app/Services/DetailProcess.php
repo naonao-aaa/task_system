@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Task;
 
 /**
  * 詳細処理クラス
@@ -68,5 +69,37 @@ class DetailProcess
     $tasks = $query->paginate(10);
 
     return $tasks;
+  }
+
+  /**
+   * taskコントローラindexメソッドの、クエリ処理など
+   *
+   * @param string $categoryId
+   * @param string $search
+   * @return Array
+   */
+  public static function taskIndexQuery($categoryId, $search): array
+  {
+    $query = Task::with(['status', 'category', 'user']);  //Eagerローディング
+
+    if (!empty($categoryId)) {       //if(isset($categoryId))とすると、空文字の時もtrueになるので、if句の処理が通ってしまうので。（emptyとissetの違いを復習すべき）//空文字列とそうでない時で分岐している。
+      $query->where('category_id', $categoryId);   //カテゴリで条件指定
+
+      self::search($search, $query);   //検索キーワードの処理
+
+      $tasks = self::taskIndexLastQueryProcess($query);   //$queryに最後に付け加える処理
+
+      $category = self::categoryName($tasks);   //カテゴリ名を取得
+
+    } else {
+      self::search($search, $query);   //検索キーワードの処理
+
+      $category = 'すべてのカテゴリ';
+
+      $tasks = self::taskIndexLastQueryProcess($query);   //$queryに最後に付け加える処理
+    }
+
+    $index = array('tasks' => $tasks, 'category' => $category, 'categoryId' => $categoryId);
+    return $index;
   }
 }

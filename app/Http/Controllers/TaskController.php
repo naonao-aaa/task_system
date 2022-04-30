@@ -20,26 +20,12 @@ class TaskController extends Controller
         $categoryId = $request->input('category') ?? '';  //$request->input('category')が、存在していない(定義されてない)か、NULLの時は、$categoryIdを''(空文字)にする。
         $search = $request->input('search');
 
-        $query = Task::with(['status', 'category', 'user']);  //Eagerローディング
+        $index = DetailProcess::taskIndexQuery($categoryId, $search);   //クエリ処理などの大部分の処理を、サービスに切り離している。
 
-        if (!empty($categoryId)) {     //if(isset($categoryId))とすると、空文字の時もtrueになるので、if句の処理が通ってしまうので。（emptyとissetの違いを復習すべき）//空文字列とそうでない時で分岐している。
-            $query->where('category_id', $categoryId);   //カテゴリで条件指定
-
-            DetailProcess::search($search, $query);   //検索キーワードの処理
-
-            $tasks = DetailProcess::taskIndexLastQueryProcess($query);   //$queryに最後に付け加える処理
-
-            $category = DetailProcess::categoryName($tasks);   //カテゴリ名を取得
-
-        } else {
-            DetailProcess::search($search, $query);   //検索キーワードの処理
-
-            $category = 'すべてのカテゴリ';
-
-            $tasks = DetailProcess::taskIndexLastQueryProcess($query);   //$queryに最後に付け加える処理
-        }
-
-        return view('task.index', compact('tasks', 'category', 'categoryId'));
+        return view('task.index')
+            ->with('tasks', $index['tasks'])
+            ->with('category', $index['category'])
+            ->with('categoryId', $index['categoryId']);
     }
 
     /**
