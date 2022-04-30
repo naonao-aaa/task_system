@@ -40,7 +40,7 @@
                             <td>{{$task->status->name}}</td>
                             <td>{{$task->user->name}}</td>
                             <td>{{$task->category->name}}</td>
-                            <td>{{$task->deadline}}</td>
+                            <td>{{$task->deadline ? $task->deadline->format("Y/m/d") : ''}}</td>
                             <td>{{$task->progress}}</td>
                             </tr>
                         </tbody>

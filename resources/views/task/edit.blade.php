@@ -62,10 +62,10 @@
                                 <option value="5" @if($task->category_id===5) selected @endif >社内管理システム</option>
                             </select>
 
-                            {{-- $task->deadlineはdate型なのだが、フツーに表示させると2022-04-23 00:00:00のように表示される。これを2022-04-23のように表示変換させないとvalueで表示されない。これを後ほど調べる。 --}}
                             <br>
                             締切日<br>
-                            <input type="date" name="deadline" value="{{ $task->deadline }}"> 前回保存締切日:{{ $task->deadline }}
+                            <input type="date" name="deadline" value="{{ $task->deadline ? $task->deadline->format('Y-m-d') : '' }}">
+                            {{--input type="date" に初期値を設定するには、フォーマットをY-m-dの形にする必要がある。--}}{{--$task->deadlineがNULLのレコードの考慮も忘れずに三項演算子用いる--}}
                             <br>
 
                             <br>
