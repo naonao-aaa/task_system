@@ -34,8 +34,8 @@
                             <textarea class="form-control" rows="10" name="description">{{ $task->description }}</textarea>
 
                             <br>
-                            登録者：{{ Auth::user()->name }}
-                            <input type="hidden" name="admin_user" value="{{ Auth::user()->id }}">
+                            登録者：{{ $task->adminUser->name }}
+                            <input type="hidden" name="admin_user" value="{{ $task->adminUser->id }}">
                             <br>
                             担当者：{{ $task->workUser->name }}
                             <input type="hidden" name="work_user" value="{{ $task->workUser->id }}">
