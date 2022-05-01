@@ -37,30 +37,6 @@ class DetailProcess
   }
 
   /**
-   * カテゴリ名を取得
-   *
-   * @param Collection $tasks 該当Taskのレコード群
-   * @return string
-   */
-  public static function categoryName($tasks): string
-  {
-    if ($tasks->count() === 0) {
-      $category = '登録がありません';
-    } else {
-      $i = 0;
-      foreach ($tasks as $task) {
-        if ($i >= 1) {
-          break;
-        }
-        $category = $task->category->name;
-        $i++;
-      }
-    }
-
-    return $category;
-  }
-
-  /**
    * task.indexで、最後に行うクエリの処理
    *
    * @param Builder $query
@@ -88,19 +64,16 @@ class DetailProcess
     if (!empty($categoryId)) {       //if(isset($categoryId))とすると、空文字の時もtrueになるので、if句の処理が通ってしまうので。（emptyとissetの違いを復習すべき）//空文字列とそうでない時で分岐している。
       $query->where('category_id', $categoryId);   //カテゴリで条件指定
 
-      self::search($search, $query);   //検索キーワードの処理
-
-      $tasks = self::taskIndexLastQueryProcess($query);   //$queryに最後に付け加える処理
-
-      $category = self::categoryName($tasks);   //カテゴリ名を取得
+      $category = Category::find($categoryId)->name;   //カテゴリ名を取得
 
     } else {
-      self::search($search, $query);   //検索キーワードの処理
 
       $category = 'すべてのカテゴリ';
-
-      $tasks = self::taskIndexLastQueryProcess($query);   //$queryに最後に付け加える処理
     }
+
+    self::search($search, $query);   //検索キーワードの処理
+
+    $tasks = self::taskIndexLastQueryProcess($query);   //$queryに最後に付け加える処理
 
     $index = array('tasks' => $tasks, 'category' => $category, 'categoryId' => $categoryId);
     return $index;
