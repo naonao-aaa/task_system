@@ -28,20 +28,26 @@
                             <tr class="table-active">
                             <th scope="col">id</th>
                             <th scope="col">ステータス</th>
-                            <th scope="col">作成者</th>
+                            <th scope="col">担当者</th>
+                            <th scope="col">登録者</th>
                             <th scope="col">カテゴリ</th>
                             <th scope="col">期日</th>
                             <th scope="col">進捗率</th>
+                            <th scope="col">工数</th>
+                            <th scope="col">更新日時</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="table-active">
                             <td>{{$task->id}}</td>
                             <td>{{$task->status->name}}</td>
-                            <td>{{$task->user->name}}</td>
+                            <td>{{$task->workUser->name}}</td>
+                            <td>{{$task->adminUser->name}}</td>
                             <td>{{$task->category->name}}</td>
                             <td>{{$task->deadline ? $task->deadline->format("Y/m/d") : ''}}</td>
                             <td>{{$task->progress}}</td>
+                            <td>{{$task->man_hours}}</td>
+                            <td>{{ $task->updated_at->format("Y/m/d") }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -49,17 +55,21 @@
                         <p class="card-text">{!! nl2br(e($task->description)) !!}</p>
                     </div>
                     <div class="card-footer text-muted">
-                    @if(Auth::user()->id === $task->user_id)
-                        <form method="GET" action="{{route('task.edit', $task)}}">
-                            @csrf
-                            <input class="btn btn-primary float-left mr-3" type="submit" value="編集する">
-                        </form>
 
-                        <form method="POST" action="{{ route('task.destroy', $task)}}" id="delete_{{ $task->id }}">
-                            @csrf
-                            <a href="#" class="btn btn-danger" data-id="{{$task->id}}" onclick="deletePost(this);">削除する</a>
-                        </form>
-                    @endif    
+                        @if(Auth::user()->id === $task->work_user)
+                            <form method="GET" action="{{route('task.edit', $task)}}">
+                                @csrf
+                                <input class="btn btn-primary float-left mr-3" type="submit" value="編集する">
+                            </form>
+                        @endif
+
+                        @if(Auth::user()->id === $task->admin_user)
+                            <form method="POST" action="{{ route('task.destroy', $task)}}" id="delete_{{ $task->id }}">
+                                @csrf
+                                <a href="#" class="btn btn-danger" data-id="{{$task->id}}" onclick="deletePost(this);">削除する</a>
+                            </form>
+                        @endif 
+
                     </div>
                     </div>
 
