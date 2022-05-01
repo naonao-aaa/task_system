@@ -28,10 +28,10 @@
                     @csrf    
                         <div class="form-group">
                             タスク名<br>
-                            <input type="text" class="form-control" name="task_name">
+                            <input type="text" class="form-control" name="task_name" value="{{old('task_name')}}">
                             <br>
                             タスク説明文<br>
-                            <textarea class="form-control" rows="10" name="description"></textarea>
+                            <textarea class="form-control" rows="10" name="description">{{old('description')}}</textarea>
                             <br>
                             登録者：{{ Auth::user()->name }}
                             <input type="hidden" name="admin_user" value="{{ Auth::user()->id }}">
@@ -42,7 +42,7 @@
                             <select name="work_user">
                                     <option value="">選択してください</option>
                                 @foreach($users as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                    <option value="{{$user->id}}" {{ $user->id == old('work_user') ? 'selected' : '' }}>{{$user->name}}</option>
                                 @endforeach
                             </select>
 
@@ -51,7 +51,7 @@
                             <select name="status">
                                     <option value="">選択してください</option>
                                 @foreach($statuses as $status)
-                                    <option value="{{$status->id}}">{{$status->name}}</option>
+                                    <option value="{{$status->id}}" {{ $status->id == old('status') ? 'selected' : '' }}>{{$status->name}}</option>
                                 @endforeach
                             </select>
 
@@ -60,7 +60,7 @@
                             <select name="category">
                                     <option value="">選択してください</option>
                                 @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    <option value="{{$category->id}}" {{ $category->id == old('category') ? 'selected' : '' }}>{{$category->name}}</option>
                                 @endforeach
                             </select>
 
@@ -69,7 +69,7 @@
                             <br>
 
                             締切日<br>
-                            <input type="date" name="deadline">
+                            <input type="date" name="deadline" value="{{old('deadline')}}">
                             <br>
 
                             <br>
