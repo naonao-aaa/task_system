@@ -93,8 +93,13 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
+        $statuses = DetailProcess::statusAll();
+        $categories = DetailProcess::categoryAll();
+
         return view('task.edit')
-            ->with('task', $task);
+            ->with('task', $task)
+            ->with('statuses', $statuses)
+            ->with('categories', $categories);
     }
 
     /**

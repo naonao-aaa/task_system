@@ -40,7 +40,7 @@
                             担当者：{{ $task->workUser->name }}
                             <input type="hidden" name="work_user" value="{{ $task->workUser->id }}">
                             <br>
-                            
+
                             <br>
                             進捗度<br>
                             <input type="integer" name="progress" value="{{ $task->progress }}">
@@ -51,21 +51,18 @@
                             <br>
                             ステータス<br>
                             <select name="status">
-                                <option value="">選択してください</option>
-                                <option value="1" @if($task->status_id===1) selected @endif>新規</option>
-                                <option value="2" @if($task->status_id===2) selected @endif>進行中</option>
-                                <option value="3" @if($task->status_id===3) selected @endif>完了</option>
-                                <option value="4" @if($task->status_id===4) selected @endif>終了</option>
+                                    <option value="">選択してください</option>
+                                @foreach($statuses as $status)
+                                    <option value="{{$status->id}}" @if($task->status_id===$status->id) selected @endif>{{$status->name}}</option>
+                                @endforeach
                             </select>
                             <br>
                             カテゴリ<br>
                             <select name="category">
-                                <option value="">選択してください</option>
-                                <option value="1" @if($task->category_id===1) selected @endif >ECサイト</option>
-                                <option value="2" @if($task->category_id===2) selected @endif >オンラインサロン</option>
-                                <option value="3" @if($task->category_id===3) selected @endif >SNSサイト</option>
-                                <option value="4" @if($task->category_id===4) selected @endif >予約システム</option>
-                                <option value="5" @if($task->category_id===5) selected @endif >社内管理システム</option>
+                                    <option value="">選択してください</option>
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}"  @if($task->category_id===$category->id) selected @endif>{{$category->name}}</option>
+                                @endforeach
                             </select>
 
                             <br>
