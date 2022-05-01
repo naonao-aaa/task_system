@@ -37,7 +37,7 @@ class CommentController extends Controller
     public function store(Request $request, Task $task)
     {
         $comment = Comment::create([
-            'admin_user' => $request->input('user'),
+            'user_id' => $request->input('user'),
             'task_id' => $request->input('task'),
             'text' => $request->input('comment')
         ]);
