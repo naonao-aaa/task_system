@@ -32,9 +32,15 @@
                             <br>
                             タスク説明文<br>
                             <textarea class="form-control" rows="10" name="description">{{ $task->description }}</textarea>
+
                             <br>
-                            作成者：{{ Auth::user()->name }}
-                            <input type="hidden" name="user" value="{{ Auth::user()->id }}">
+                            登録者：{{ Auth::user()->name }}
+                            <input type="hidden" name="admin_user" value="{{ Auth::user()->id }}">
+                            <br>
+                            担当者：{{ $task->workUser->name }}
+                            <input type="hidden" name="work_user" value="{{ $task->workUser->id }}">
+                            <br>
+                            
                             <br>
                             進捗度<br>
                             <input type="integer" name="progress" value="{{ $task->progress }}">

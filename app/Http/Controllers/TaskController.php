@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Task;
 use App\Comment;
 use App\Http\Requests\StoreTaskForm;
+use App\Http\Requests\UpdateTaskForm;
 use App\Services\DetailProcess;
 
 class TaskController extends Controller
@@ -103,7 +104,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreTaskForm $request, Task $task)
+    public function update(UpdateTaskForm $request, Task $task)
     {
         $task->name = $request->input('task_name');
         $task->description = $request->input('description');
