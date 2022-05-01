@@ -38,7 +38,14 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('task.create');
+        $users = DetailProcess::userAll();
+        $statuses = DetailProcess::statusAll();
+        $categories = DetailProcess::categoryAll();
+
+        return view('task.create')
+            ->with('users', $users)
+            ->with('statuses', $statuses)
+            ->with('categories', $categories);
     }
 
     /**
@@ -52,7 +59,8 @@ class TaskController extends Controller
         $task = Task::create([
             'name' => $request->input('task_name'),
             'description' => $request->input('description'),
-            'admin_user' => $request->input('user'),
+            'admin_user' => $request->input('admin_user'),
+            'work_user' => $request->input('work_user'),
             'category_id' => $request->input('category'),
             'status_id' => $request->input('status'),
             'progress' => $request->input('progress'),

@@ -32,7 +32,7 @@
                           <th scope="col">id</th>
                           <th scope="col">ステータス</th>
                           <th scope="col">タスク名</th>
-                          <th scope="col">作成者</th>
+                          <th scope="col">担当者</th>
                           <th scope="col">締切日</th>
                           <th scope="col">更新日時</th>
                           </tr>
@@ -43,7 +43,7 @@
                           <th><a href="{{ route('task.show', $task->id) }}">{{$task->id}}</a></th>
                           <td>{{$task->status->name}}</td>
                           <td><a href="{{ route('task.show', $task->id) }}">{{$task->name}}</a></td>
-                          <td>{{ $task->adminUser->name }}</td>
+                          <td>{{ $task->workUser->name ?? '' }}</td>
                           <td>{{ $task->deadline ? $task->deadline->format("Y/m/d") : '' }}</td>  {{-- $task->deadlineはnullable設定をしているので、NULLのレコードを考慮して三項演算子を用いる --}}
                           <td>{{ $task->updated_at->format("Y/m/d") }}</td>  {{-- $task->updated_atは、nullable設定をしていないためNULLのレコードは無いため、NULLを考慮しないでOK --}}
                           </tr>

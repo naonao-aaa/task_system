@@ -28,6 +28,7 @@ class StoreTaskForm extends FormRequest
             'description' => 'required|string',
             'status' => 'required',
             'category' => 'required',
+            'work_user' => 'required',
         ];
     }
 
@@ -38,6 +39,7 @@ class StoreTaskForm extends FormRequest
             'description' => 'タスク説明文',
             'status' => 'ステータス',
             'category' => 'カテゴリ',
+            'work_user' => '担当者',
         ];
     }
 }

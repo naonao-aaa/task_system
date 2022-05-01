@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Task;
 use App\Category;
+use App\User;
+use App\Status;
 
 /**
  * 詳細処理クラス
@@ -113,5 +115,27 @@ class DetailProcess
   {
     $categoryAll = Category::all();
     return $categoryAll;
+  }
+
+  /**
+   * Userテーブルの全てのユーザーを取得
+   *
+   * @return Collection
+   */
+  public static function userAll(): Collection
+  {
+    $userAll = User::all();
+    return $userAll;
+  }
+
+  /**
+   * Statusテーブルの全てのステータスを取得
+   *
+   * @return Collection
+   */
+  public static function statusAll(): Collection
+  {
+    $statusAll = Status::all();
+    return $statusAll;
   }
 }

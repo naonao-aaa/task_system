@@ -33,26 +33,35 @@
                             タスク説明文<br>
                             <textarea class="form-control" rows="10" name="description"></textarea>
                             <br>
-                            作成者：{{ Auth::user()->name }}
-                            <input type="hidden" name="user" value="{{ Auth::user()->id }}">
+                            登録者：{{ Auth::user()->name }}
+                            <input type="hidden" name="admin_user" value="{{ Auth::user()->id }}">
+                            <br>
+
+                            <br>
+                            担当者<br>
+                            <select name="work_user">
+                                    <option value="">選択してください</option>
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                            </select>
+
                             <br>
                             ステータス<br>
                             <select name="status">
-                                <option value="">選択してください</option>
-                                <option value="1">新規</option>
-                                <option value="2">進行中</option>
-                                <option value="3">完了</option>
-                                <option value="4">終了</option>
+                                    <option value="">選択してください</option>
+                                @foreach($statuses as $status)
+                                    <option value="{{$status->id}}">{{$status->name}}</option>
+                                @endforeach
                             </select>
+
                             <br>
                             カテゴリ<br>
                             <select name="category">
-                                <option value="">選択してください</option>
-                                <option value="1">ECサイト</option>
-                                <option value="2">オンラインサロン</option>
-                                <option value="3">SNSサイト</option>
-                                <option value="4">予約システム</option>
-                                <option value="5">社内管理システム</option>
+                                    <option value="">選択してください</option>
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
                             </select>
 
                             {{-- 進捗度 --}}
