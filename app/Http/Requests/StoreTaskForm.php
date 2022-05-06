@@ -24,11 +24,11 @@ class StoreTaskForm extends FormRequest
     public function rules()
     {
         return [
-            'task_name' => 'required|string',
+            'task_name' => 'required|string|max:255',
             'description' => 'required|string',
-            'status' => 'required',
-            'category' => 'required',
-            'work_user' => 'required',
+            'status' => 'required|integer|exists:App\Status,id',       //exitsはテーブル名よりもモデル名で指定する方が望ましい。
+            'category' => 'required|integer|exists:App\Category,id',
+            'work_user' => 'required|integer|exists:App\User,id',
         ];
     }
 

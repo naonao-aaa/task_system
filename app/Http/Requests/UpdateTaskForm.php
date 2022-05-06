@@ -24,10 +24,12 @@ class UpdateTaskForm extends FormRequest
     public function rules()
     {
         return [
-            'task_name' => 'required|string',
+            'task_name' => 'required|string|max:255',
             'description' => 'required|string',
-            'status' => 'required',
-            'category' => 'required',
+            'status' => 'required|integer|exists:App\Status,id',
+            'category' => 'required|integer|exists:App\Category,id',
+            'progress' => 'integer|max:100',
+            'man_hours' => 'integer',
         ];
     }
 
@@ -38,6 +40,8 @@ class UpdateTaskForm extends FormRequest
             'description' => 'タスク説明文',
             'status' => 'ステータス',
             'category' => 'カテゴリ',
+            'progress' => '進捗度',
+            'man_hours' => '工数',
         ];
     }
 }
