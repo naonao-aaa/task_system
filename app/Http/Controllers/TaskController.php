@@ -8,15 +8,18 @@ use App\Comment;
 use App\Http\Requests\StoreTaskForm;
 use App\Http\Requests\UpdateTaskForm;
 use App\Services\DetailProcess;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Illuminate\Http\Request
+     * @return Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $categoryId = $request->input('category') ?? '';  //$request->input('category')が、存在していない(定義されてない)か、NULLの時は、$categoryIdを''(空文字)にする。
         $search = $request->input('search');
@@ -35,9 +38,9 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         $users = DetailProcess::userAll();
         $statuses = DetailProcess::statusAll();
@@ -52,10 +55,10 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  App\Http\Requests\StoreTaskForm  $request
+     * @return Illuminate\Http\RedirectResponse
      */
-    public function store(StoreTaskForm $request)
+    public function store(StoreTaskForm $request): RedirectResponse
     {
         $task = Task::create([
             'name' => $request->input('task_name'),
@@ -74,10 +77,10 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  App\Task  $task
+     * @return Illuminate\View\View
      */
-    public function show(Task $task)
+    public function show(Task $task): View
     {
         $comments = Comment::with(['task', 'user'])->where('task_id', $task->id)->get();
 
@@ -88,10 +91,10 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  App\Task  $task
+     * @return Illuminate\View\View
      */
-    public function edit(Task $task)
+    public function edit(Task $task): View
     {
         $statuses = DetailProcess::statusAll();
         $categories = DetailProcess::categoryAll();
@@ -105,11 +108,11 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  App\Http\Requests\UpdateTaskForm  $request
+     * @param  App\Task  $task
+     * @return Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateTaskForm $request, Task $task)
+    public function update(UpdateTaskForm $request, Task $task): RedirectResponse
     {
         $task->name = $request->input('task_name');
         $task->description = $request->input('description');
@@ -127,10 +130,10 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  App\Task  $task
+     * @return Illuminate\Http\RedirectResponse
      */
-    public function destroy(Task $task)
+    public function destroy(Task $task): RedirectResponse
     {
         $task->delete();
 
