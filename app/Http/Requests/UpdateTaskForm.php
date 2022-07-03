@@ -28,8 +28,8 @@ class UpdateTaskForm extends FormRequest
             'description' => 'required|string',
             'status' => 'required|integer|exists:App\Status,id',
             'category' => 'required|integer|exists:App\Category,id',
-            'progress' => 'integer|max:100',
-            'man_hours' => 'integer',
+            'progress' => 'integer|nullable|max:100',
+            'man_hours' => 'integer|nullable',
         ];
     }
 
