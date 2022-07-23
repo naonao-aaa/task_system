@@ -53,11 +53,12 @@ class DetailProcess
   /**
    * taskコントローラindexメソッドの、クエリ処理など
    *
-   * @param string $categoryId
+   * @param integer $categoryId
    * @param string $search
+   * @param integer $workUserId
    * @return Array
    */
-  public static function taskIndexQuery($categoryId, $search): array
+  public static function taskIndexQuery($categoryId, $search, $workUserId): array
   {
     $query = Task::with(['status', 'category', 'adminUser', 'workUser']);  //Eagerローディング
 
@@ -71,11 +72,15 @@ class DetailProcess
       $category = 'すべてのカテゴリ';
     }
 
+    if (!empty($workUserId)) {
+      $query->where('work_user', $workUserId);  //担当者で条件指定
+    }
+
     self::search($search, $query);   //検索キーワードの処理
 
     $tasks = self::taskIndexLastQueryProcess($query);   //$queryに最後に付け加える処理
 
-    $index = array('tasks' => $tasks, 'category' => $category, 'categoryId' => $categoryId);
+    $index = array('tasks' => $tasks, 'category' => $category, 'categoryId' => $categoryId, 'workUserId' => $workUserId);
     return $index;
   }
 

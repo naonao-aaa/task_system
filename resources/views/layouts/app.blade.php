@@ -52,12 +52,20 @@
 
                             @if(isset($categoryId))  {{--以下のプルダウンで、$categoryIdという変数を用いているので、エラーが出ないように$categoryIdが存在していない時とNULLの時はこのプルダウン自体を表示させないようにした。--}}
                                 <form method="GET" action="{{ route('task.index') }}">
-                                    <select onchange="submit(this.form)" name="category" class="nav-link">
-                                            <option value="" {{ $categoryId == '' ? 'selected' : '' }}>カテゴリ選択</option>
-                                        @foreach($pulldownCategories as $pulldownCategory)
-                                            <option value="{{$pulldownCategory->id}}" {{ $categoryId == $pulldownCategory->id ? 'selected' : '' }}>{{$pulldownCategory->name}}</option> {{--選択された項目が初期値になるようにselected属性を追加--}}
-                                        @endforeach
-                                    </select>
+                                    <div class="form-inline">
+                                        <select onchange="submit(this.form)" name="category" class="nav-link">
+                                                <option value="" {{ $categoryId == '' ? 'selected' : '' }}>カテゴリ選択</option>
+                                            @foreach($pulldownCategories as $pulldownCategory)
+                                                <option value="{{$pulldownCategory->id}}" {{ $categoryId == $pulldownCategory->id ? 'selected' : '' }}>{{$pulldownCategory->name}}</option> {{--選択された項目が初期値になるようにselected属性を追加--}}
+                                            @endforeach
+                                        </select>
+                                        <select onchange="submit(this.form)" name="work_user" class="nav-link mx-2">
+                                                <option value="" {{ $workUserId == '' ? 'selected' : '' }}>担当者選択</option>
+                                            @foreach($pulldownUsers as $pulldownUser)
+                                                <option value="{{$pulldownUser->id}}" {{ $workUserId == $pulldownUser->id ? 'selected' : '' }}>{{$pulldownUser->name}}</option> {{--選択された項目が初期値になるようにselected属性を追加--}}
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </form>
                             @endif
 
